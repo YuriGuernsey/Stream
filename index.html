@@ -4,24 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script>
     <title>Document</title>
 </head>
 <body>
-    <h1>Speech color changer</h1>
-    <p>Tap/click then say a color to change the background color of the app.</p>
-    <div>
-      <p class="output"><em>...diagnostic messages</em></p>
-    </div>
+      <div></div>
     <script>
- var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
-recognition.lang = 'en-US';
-recognition.interimResults = false;
-recognition.maxAlternatives = 5;
-recognition.start();
-
-recognition.onresult = function(event) {
-    console.log('You said: ', event.results[0][0].transcript);
-};
+    if (annyang) {
+      // Let's define our first command. First the text we expect, and then the function it should call
+      var commands = {
+        'body green': function() {
+          $('body').css("backgroundColor", "green");
+        }
+      };
+    
+      // Add our commands to annyang
+      annyang.addCommands(commands);
+    
+      // Start listening. You can call this here, or attach this call to an event, button, etc.
+      annyang.start();
+    }else{ console.log("nope")}
     </script>
 </body>
 </html>
