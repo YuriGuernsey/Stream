@@ -13,13 +13,15 @@
       <p class="output"><em>...diagnostic messages</em></p>
     </div>
     <script>
-  if ('SpeechRecognition' in window) {
-    console.log('Speech recognition supported 😊');
-    // code to handle recognition here
-} else {
-    console.log('Speech recognition not supported 😢');
-    // code to handle error
-}
+ var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+recognition.lang = 'en-US';
+recognition.interimResults = false;
+recognition.maxAlternatives = 5;
+recognition.start();
+
+recognition.onresult = function(event) {
+    console.log('You said: ', event.results[0][0].transcript);
+};
     </script>
 </body>
 </html>
